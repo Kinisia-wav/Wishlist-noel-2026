@@ -12,18 +12,18 @@ const gifts=[
 ['vinyles','Travis Scott','Rodeo','https://www.cultura.com/p-rodeo-10572769.html','', '#b67b51'],
 ['vinyles','ANOTR','On A Trip','https://www.discogs.com/search/?q=ANOTR+On+A+Trip&type=release','Double vinyle — un des deux albums ANOTR au choix. Lien de recherche pour trouver le vinyle.', '#b7a28c','Au choix'],
 ['vinyles','ANOTR','Withness','https://www.discogs.com/search/?q=ANOTR+Withness&type=release','Double vinyle — un des deux albums ANOTR au choix. Lien de recherche pour trouver le vinyle.', '#84979a','Au choix'],
-['vinyles','À confirmer','Octane — édition colorée','https://www.cultura.com/p-octane-edition-coloree-13061030.html','Référence repérée chez Cultura.', '#6a9d90'],
+['vinyles','Don Toliver','Octane — édition colorée','https://www.cultura.com/p-octane-edition-coloree-13061030.html','Album de Don Toliver — référence repérée chez Cultura.', '#6a9d90'],
 ['dj','Ortofon','Concorde MKII DJ','https://www.sonovente.com/ortofon-cc-mkii-dj-p60303.html','Une seule cellule suffit (pas le pack Twin). Également à demander chez Sonopro à Lorient.',null,'À l’unité'],
 ['maison','Déco','Dessous de verre design','https://www.amazon.fr/Litensh-Dessous-sous-Verres-Bouteille-Support/dp/B09F95BWGP','Ce lien est un exemple : n’importe quels beaux dessous de verre originaux me feront plaisir !',null,'Modèle libre']
 ];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const covers=["images/after-hours.jpg","images/hurry-up-tomorrow.jpg","images/my-dear-melancholy.jpg","images/starboy.jpg","images/question-mark.jpg","images/spider-verse.jpg","images/heroes-villains.jpg","images/rodeo.jpg","images/on-a-trip.jpg","images/withness.jpg",""];
+const covers=["images/after-hours.jpg","images/hurry-up-tomorrow.jpg","images/my-dear-melancholy.jpg","images/starboy.jpg","images/question-mark.jpg","images/spider-verse.jpg","images/heroes-villains.jpg","images/rodeo.jpg","images/on-a-trip.jpg","images/withness.jpg","images/octane.jpg"];
 for(const [index,[cat,artist,name,url,desc,color,tag]] of gifts.entries()){
  const article=document.createElement('article');article.className='gift';
  const art=cat==='vinyles'?`<div class="album-placeholder" style="--label:${color}"><span>${esc(artist)}</span><strong>${esc(name)}</strong></div>`:`<div class="emoji">${cat==='dj'?'🎛️':'☕'}</div>`;
  article.innerHTML=`<div class="art">${art}${cat==='vinyles'?'<img alt="Pochette de l’album" loading="eager">':''}</div><div class="body"><div class="artist">${esc(artist)}</div><h3>${esc(name)}</h3>${tag?`<span class="tag">${esc(tag)}</span>`:''}<p>${esc(desc||'Album vinyle — voir le modèle sur Cultura.')}</p><a class="buy" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Voir le cadeau ↗</a></div>`;
  document.getElementById(cat).appendChild(article);
- if(cat==='vinyles' && covers[index]){const img=article.querySelector('img');img.onload=()=>{img.parentElement.classList.add('has-cover')};img.onerror=()=>{img.hidden=true};img.src=covers[index]+'?v=2';}
+ if(cat==='vinyles' && covers[index]){const img=article.querySelector('img');img.onload=()=>{img.parentElement.classList.add('has-cover')};img.onerror=()=>{img.hidden=true};img.src=covers[index]+'?v=3';}
 }
 document.querySelectorAll('.nav button').forEach(btn=>btn.addEventListener('click',()=>{
  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b===btn));
