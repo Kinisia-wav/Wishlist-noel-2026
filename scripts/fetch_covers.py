@@ -14,6 +14,7 @@ albums=[
 ("rodeo","Travis Scott","Rodeo"),
 ("on-a-trip","ANOTR","On A Trip"),
 ("withness","ANOTR","Withness"),
+("octane","Don Toliver","Octane"),
 ]
 def norm(s):
  s=unicodedata.normalize("NFKD",s).casefold()
@@ -22,7 +23,15 @@ def get(url):
  req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0 WishlistAlbumArtwork/1.0"})
  with urllib.request.urlopen(req,timeout=25) as response:return response.read()
 for slug,artist,album in albums:
+ if slug not in {"question-mark","on-a-trip","octane"}: continue
  try:
+  if slug in {"question-mark","on-a-trip"}:
+   release={"question-mark":"ca1e1e7b-ac08-4ebe-a809-fe3a949daa55","on-a-trip":"fe2a9747-d008-462b-b1db-25f413c0ebfa"}[slug]
+   raw=get("https://coverartarchive.org/release/"+release+"/front-500")
+   if len(raw)<2000: raise ValueError("Artwork too small")
+   (OUT/(slug+".jpg")).write_bytes(raw)
+   print("SAVED verified cover",slug,len(raw))
+   continue
   query=urllib.parse.urlencode({"term":artist+" "+album,"entity":"album","media":"music","limit":100,"country":"fr"})
   data=json.loads(get("https://itunes.apple.com/search?"+query))
   results=data.get("results",[])
