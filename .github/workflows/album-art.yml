@@ -1,0 +1,28 @@
+name: Download album cover images
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/fetch_covers.py'
+      - '.github/workflows/album-art.yml'
+permissions:
+  contents: write
+jobs:
+  artwork:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch actual album cover JPG files
+        run: python scripts/fetch_covers.py
+      - name: Commit images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/*.jpg
+          if ! git diff --cached --quiet; then
+            git commit -m "Add real album artwork files"
+            git push
+          fi
