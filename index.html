@@ -21,9 +21,9 @@ const covers=["images/after-hours.jpg","images/hurry-up-tomorrow.jpg","images/my
 for(const [index,[cat,artist,name,url,desc,color,tag]] of gifts.entries()){
  const article=document.createElement('article');article.className='gift';
  const art=cat==='vinyles'?`<div class="album-placeholder" style="--label:${color}"><span>${esc(artist)}</span><strong>${esc(name)}</strong></div>`:`<div class="emoji">${cat==='dj'?'🎛️':'☕'}</div>`;
- article.innerHTML=`<div class="art">${art}${cat==='vinyles'?'<img alt="Pochette de l’album" loading="lazy" hidden>':''}</div><div class="body"><div class="artist">${esc(artist)}</div><h3>${esc(name)}</h3>${tag?`<span class="tag">${esc(tag)}</span>`:''}<p>${esc(desc||'Album vinyle — voir le modèle sur Cultura.')}</p><a class="buy" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Voir le cadeau ↗</a></div>`;
+ article.innerHTML=`<div class="art">${art}${cat==='vinyles'?'<img alt="Pochette de l’album" loading="eager">':''}</div><div class="body"><div class="artist">${esc(artist)}</div><h3>${esc(name)}</h3>${tag?`<span class="tag">${esc(tag)}</span>`:''}<p>${esc(desc||'Album vinyle — voir le modèle sur Cultura.')}</p><a class="buy" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Voir le cadeau ↗</a></div>`;
  document.getElementById(cat).appendChild(article);
- if(cat==='vinyles' && covers[index]){const img=article.querySelector('img');img.onload=()=>{img.hidden=false;img.parentElement.classList.add('has-cover')};img.onerror=()=>{img.hidden=true};img.src=covers[index];}
+ if(cat==='vinyles' && covers[index]){const img=article.querySelector('img');img.onload=()=>{img.parentElement.classList.add('has-cover')};img.onerror=()=>{img.hidden=true};img.src=covers[index]+'?v=2';}
 }
 document.querySelectorAll('.nav button').forEach(btn=>btn.addEventListener('click',()=>{
  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b===btn));
