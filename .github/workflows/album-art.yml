@@ -24,5 +24,6 @@ jobs:
           git add images/*.jpg
           if ! git diff --cached --quiet; then
             git commit -m "Add real album artwork files"
-            git push
+            git pull --rebase origin main
+            git push origin main
           fi
