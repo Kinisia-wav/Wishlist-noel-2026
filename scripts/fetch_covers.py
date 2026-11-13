@@ -50,3 +50,25 @@ for slug,artist,album in albums:
   print("SAVED",slug,record.get("collectionName"),len(raw))
  except Exception as e:print("FAILED",slug,str(e))
  time.sleep(.2)
+
+# Product photos: retrieve the merchant's own social preview image.
+import html as htmlmod
+product_pages=[
+ ("ortofon-dj-mkii","https://www.sonovente.com/ortofon-cc-mkii-dj-p60303.html"),
+ ("dessous-de-verre","https://www.amazon.fr/Litensh-Dessous-sous-Verres-Bouteille-Support/dp/B09F95BWGP"),
+]
+for slug,page in product_pages:
+ try:
+  page_html=get(page).decode("utf-8","replace")
+  match=re.search(r'<meta[^>]+(?:property|name)=["\\'](?:og:image|twitter:image)["\\'][^>]+content=["\\']([^"\\']+)',page_html,re.I)
+  if not match:
+   match=re.search(r'<meta[^>]+content=["\\']([^"\\']+)["\\'][^>]+(?:property|name)=["\\'](?:og:image|twitter:image)',page_html,re.I)
+  if not match: raise ValueError("No product preview image found")
+  image_url=urllib.parse.urljoin(page,htmlmod.unescape(match.group(1)))
+  raw=get(image_url)
+  if len(raw)<2000: raise ValueError("Image too small")
+  ext=".png" if raw.startswith(b"\\x89PNG") else ".jpg" if raw.startswith(b"\\xff\\xd8") else None
+  if not ext:raise ValueError("Unsupported image format")
+  (OUT/(slug+ext)).write_bytes(raw)
+  print("SAVED PRODUCT",slug,image_url,len(raw))
+ except Exception as e:print("PRODUCT IMAGE FAILED",slug,str(e))
