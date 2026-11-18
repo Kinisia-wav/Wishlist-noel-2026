@@ -74,3 +74,26 @@ for slug,page in product_pages:
   (OUT/(slug+ext)).write_bytes(raw)
   print("SAVED PRODUCT",slug,image_url,len(raw))
  except Exception as e:print("PRODUCT IMAGE FAILED",slug,str(e))
+
+# Fallback: official Ortofon product page (manufacturer's own product photo).
+if not (OUT/"ortofon-dj-mkii.jpg").exists():
+ for page in [
+  "https://ortofon.com/products/concorde-mkii-dj",
+  "https://ortofon.com/products/concorde-mkii-dj-single",
+  "https://www.thomann.de/fr/ortofon_concorde_mkii_dj.htm"
+ ]:
+  try:
+   body=get(page).decode("utf-8","replace")
+   m=re.search(r"""<meta[^>]+(?:property|name)=["']og:image["'][^>]+content=["']([^"']+)""",body,re.I)
+   if not m: m=re.search(r"""<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image["']""",body,re.I)
+   if not m: continue
+   url=urllib.parse.urljoin(page,htmlmod.unescape(m.group(1)))
+   raw=get(url)
+   if raw.startswith(bytes.fromhex("ffd8")):
+    (OUT/"ortofon-dj-mkii.jpg").write_bytes(raw)
+   elif raw.startswith(bytes.fromhex("89504e47")):
+    (OUT/"ortofon-dj-mkii.png").write_bytes(raw)
+   else:continue
+   print("SAVED ORTOFON OFFICIAL",url,len(raw))
+   break
+  except Exception as e:print("ORTOFON FALLBACK",str(e))
