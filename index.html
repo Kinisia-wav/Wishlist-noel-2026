@@ -19,7 +19,7 @@ const gifts=[
 ['maison','Teppana','Tilda — tapis bleu cobalt','https://teppana.fr/products/tapis-tilda-bleu-cobalt?variant=56656118743420','Tapis bleu cobalt — voir les dimensions et le prix sur le site.',null,'Bleu cobalt']
 ];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const productImages={dj:'images/ortofon-dj-mkii.jpg',maison:'images/dessous-de-verre.jpg'};
+const productImages={dj:'https://thumbs.static-thomann.de/thumb//bdbmagic/pics/prod/431358.jpg',maison:'images/dessous-de-verre.jpg'};
 const rugImages={'KANARIEPALM — tapis blanc cassé':'images/kanariepalm.jpg','Tilda — tapis bleu cobalt':'images/tilda-bleu-cobalt.jpg'};
 const covers=["images/after-hours.jpg","images/hurry-up-tomorrow.jpg","images/my-dear-melancholy.jpg","images/starboy.jpg","images/question-mark.jpg","images/spider-verse.jpg","images/heroes-villains.jpg","images/rodeo.jpg","images/on-a-trip.jpg","images/withness.jpg","images/octane.jpg"];
 for(const [index,[cat,artist,name,url,desc,color,tag]] of gifts.entries()){
