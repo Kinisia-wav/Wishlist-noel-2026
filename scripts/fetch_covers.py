@@ -56,6 +56,8 @@ import html as htmlmod
 product_pages=[
  ("ortofon-dj-mkii","https://www.sonovente.com/ortofon-cc-mkii-dj-p60303.html"),
  ("dessous-de-verre","https://www.amazon.fr/Litensh-Dessous-sous-Verres-Bouteille-Support/dp/B09F95BWGP"),
+ ("kanariepalm","https://www.ikea.com/fr/fr/p/kanariepalm-tapis-poils-ras-blanc-casse-20630376/"),
+ ("tilda-bleu-cobalt","https://teppana.fr/products/tapis-tilda-bleu-cobalt?variant=56656118743420"),
 ]
 for slug,page in product_pages:
  try:
